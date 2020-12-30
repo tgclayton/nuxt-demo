@@ -18,7 +18,7 @@
                         :data-item-description="product.Description"
                         :data-item-image="product.Image"
                         :data-item-name="product.Title"
-                        v-bind="Custom-field">
+                        v-bind="customFields">
                         Add to cart
                     </button>
                 </div>
@@ -35,6 +35,16 @@ export default {
       storeUrl: process.env.storeUrl
     }
   },
+  //   computed: {
+  //   customFields(){
+  //     return this.product["Custom_field"]
+  //       .map(({title, required, options}) => ({name: title, required, options}))
+  //       .map((x, index) => Object.entries(x)
+  //         .map(([key, value]) => ({[`data-item-custom${index + 1}-${key.toString().toLowerCase()}`]: value})))
+  //       .reduce((acc, curr) => acc.concat(curr), [])
+  //       .reduce((acc, curr) => ({...acc, ...curr}))
+  //   }
+  // },
   created: async function () {
     const res = await fetch(`http://localhost:1337/products/${this.$route.params.id}`)
     this.product = await res.json()
