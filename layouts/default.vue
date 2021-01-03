@@ -2,11 +2,18 @@
   <div class="md:flex flex-col w-screen h-screen content-center p-6">
     <NavBar />
     <Nuxt />
+    
     <script async src="https://cdn.snipcart.com/themes/v3.0.27/default/snipcart.js"></script>
     <div hidden id="snipcart" data-api-key="NmUwZjFlMmQtZDRlMi00NWFhLWEyMGItNDY1ZDk0ODg5YjMzNjM3NDQ3ODM2MjUzMjkwNzY3"></div>
   </div>
 </template>
-
+<script>
+import NavBar from './../components/navbar'
+// import Footer from './../components/footer'
+export default {
+  components: { NavBar }
+}
+</script>
 <style>
 html {
   font-family:
