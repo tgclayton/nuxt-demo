@@ -3,7 +3,7 @@
         <div v-if="this.product !== null">
             <div class="flex flex-col items-center border rounded-lg bg-gray-100">
                 <div class="w-full bg-white rounded-lg flex justify-center">
-                    <img :src="product.Image" width="375">
+                    <img :src="'http://localhost:1337' + product.Image.url" width="375">
                 </div>
                 <div class="w-full p-5 flex flex-col justify-between">
                     <div>
@@ -35,20 +35,9 @@ export default {
       storeUrl: process.env.storeUrl
     }
   },
-  //   computed: {
-  //   customFields(){
-  //     return this.product["Custom_field"]
-  //       .map(({title, required, options}) => ({name: title, required, options}))
-  //       .map((x, index) => Object.entries(x)
-  //         .map(([key, value]) => ({[`data-item-custom${index + 1}-${key.toString().toLowerCase()}`]: value})))
-  //       .reduce((acc, curr) => acc.concat(curr), [])
-  //       .reduce((acc, curr) => ({...acc, ...curr}))
-  //   }
-  // },
   created: async function () {
     const res = await fetch(`http://localhost:1337/products/${this.$route.params.id}`)
     this.product = await res.json()
-    console.log('res:', this.product)
   }
 }
 </script>
