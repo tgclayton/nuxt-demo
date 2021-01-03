@@ -12,11 +12,11 @@
                     </div>
                     <button 
                         class="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
-                        :data-item-id="product.Id"
+                        :data-item-id="product.id"
                         :data-item-price="product.Price"
                         :data-item-url="`${storeUrl}${this.$route.fullPath}`"
                         :data-item-description="product.Description"
-                        :data-item-image="product.Image"
+                        :data-item-image="'http://localhost:1337' + product.Image.url"
                         :data-item-name="product.Title"
                         v-bind="customFields">
                         Add to cart
@@ -32,12 +32,22 @@ export default {
   data(){
     return {
       product: null,
-      storeUrl: process.env.storeUrl
+      storeUrl: process.env.storeUrl || "http://localhost:1337/"
     }
   },
   created: async function () {
     const res = await fetch(`http://localhost:1337/products/${this.$route.params.id}`)
     this.product = await res.json()
+  },
+    computed: {
+    customFields(){
+      return this.product["Custom_field"]
+        .map(({title, required, options}) => ({name: title, required, options}))
+        .map((x, index) => Object.entries(x)
+          .map(([key, value]) => ({[`data-item-custom${index + 1}-${key.toString().toLowerCase()}`]: value})))
+        .reduce((acc, curr) => acc.concat(curr), [])
+        .reduce((acc, curr) => ({...acc, ...curr}))
+    }
   }
 }
 </script>
